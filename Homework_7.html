@@ -1,0 +1,312 @@
+<!DOCTYPEhtml>
+<html>
+  <head>
+    <title>Top Pot homework</title>
+    <link rel="stylesheet" type="text/css" href="pushy-master/css/pushy.css"></link>
+    <link rel="stylesheet" type="text/css" href="Homework_5.css"></link>
+
+  </head>
+  <body>
+
+
+    <nav class="pushy pushy-left">
+      <img id="menuImage" src="img/toppot_handforgedlogo.jpg" height="100px" width="100px"/>
+        <ul>
+            <li id="appleFritter"><a href="#">Apple Fritter</a></li>
+            <li id="bar"><a href="#">Bar</a></li>
+            <li id="chocolateCake"><a href="#">Chocolate Cake</a></li>
+            <li id="filled"><a href="#">Filled</a></li>
+            <li id="oldFashion"><a href="#">Old Fashion</a></li>
+            <li id="plainCake"><a href="#">Plain Cake</a></li>
+            <li id="rings"><a href="#">Rings</a></li>
+            <li id="specialtyCake"><a href="#">Specialty Cake</a></li>
+            <li id="sprinkles"><a href="#">Sprinkles</a></li>
+        </ul>
+    </nav>
+
+    <!-- Site Overlay
+    <div class="site-overlay">
+      </div>
+        -->
+
+       <!-- Menu Button -->
+        <div class="menu-btn">&#9776; Menu</div>
+
+
+
+
+      <section>
+        <header><h1>Master of Donuts</h1></header>
+
+      <!-- Your Content -->
+      <div id="container">
+
+
+        <nav>Welcome to the yummy world of donut numbers! Here is a table for
+          you to help find the busiest Top Pot or <em>(even better)</em> where
+           it's the least busy! You can go to the Top Pot that's the lease busy
+            and spend less time waiting and more time buying! Yay, you!</nav>
+        <br/>
+        <article>
+        <img id="main" src="http://dazzlingplaces.com/Images/Seattle/Top%20Pot/TopPotAssortment.jpg"></img>
+        <table>
+          <thead>
+            <th scope="col">Top Pot shops</th>
+            <th scope="col">Avg. per hour</th>
+            <th scope="col">Hours open</th>
+            <th scope="col">Total per day</th>
+          </thead>
+          <tbody>
+            <!-- going to be filled dynamically -->
+          </tbody>
+        </table>
+
+
+              <div id="newDonutShop"><button href="#" id="showForm">new shop</button></div>
+              <form id="newShopForm">
+                <input type="text" id="shopName" placeholder="Shop name..." />
+                <input type="text" id="avgPerHour" placeholder="Avg Per Hour..." />
+                <input type="text" id="minCustomers" placeholder="minumum customers..." />
+                <input type="text" id="maxCustomers" placeholder="maximum customers..." />
+                <input type="submit" id="addButton" value="add" />
+            </form>
+
+        </article>
+       </div>
+        </section>
+        <footer>
+          <ul>
+            <li><a id="Capital" href="http://toppotdoughnuts.com/">Capitol Hill
+              hours: 6am-6pm</a></li>
+            <li><a id="Downtown" href="http://toppotdoughnuts.com/">Downtown
+              hours: 7am-7pm</a></li>
+            <li><a id="Wedgewood" href="http://toppotdoughnuts.com/">Wedgewood
+              hours: 5am-5pm</a></li>
+            <li><a id="Ballard" href="http://toppotdoughnuts.com/">Ballard
+              hours: 6am-6pm</a></li>
+            <li><a id="SLU" href="http://toppotdoughnuts.com/">S.Lake Union
+              hours:6am-6pm</a></li>
+          </ul>
+        </footer>
+
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="pushy-master/js/pushy.min.js"></script>
+    <script>
+
+       var DonutShop = function(min,max,avg) {
+        this.minimum = min;
+        this.maximum = max;
+        this.average = avg;
+
+        this.getDonutsPerHour = function() {
+          var numCustomers = Math.floor(Math.random() * (this.maximum -
+            this.minimum + 1)) + this.minimum;
+          return numCustomers * this.average ;
+        };
+        this.getDonutsPerDay = function() {
+          return this.getDonutsPerHour() * 12;
+        };
+
+    };
+
+    var DonutMaster = function(){
+          this.shopNames = [];
+          this.shops = [];
+
+        this.addShop = function(shopName,shop){
+          this.shopNames.push(shopName);
+          this.shops.push(shop);
+
+
+          var $cells = $('table tbody');
+          $cells.append("<tr><td>" + shopName + "</td><td>" +
+            shop.getDonutsPerHour() + "</td><td>" + "12" +
+            "</td><td>" + shop.getDonutsPerDay()+ "</td></tr>");
+           $cells.hide().fadeIn(2000);
+    };
+
+        this.generateReport = function() {
+          for(var i = 0; i<this.shopNames.length; i++){
+            console.log(this.shopNames[i]);
+            console.log("   Donuts per hour " + this.shops[i].getDonutsPerHour());
+            console.log("   Donuts per day " + this.shops[i].getDonutsPerDay());
+
+          }
+
+        }
+
+    };
+
+      var TopSpotOfTopPot = new DonutMaster();
+
+      var Downtown = new DonutShop(8,43,4.50);
+        TopSpotOfTopPot.addShop("Downtown",Downtown);
+      var CapitolHill = new DonutShop(4,37,2);
+        TopSpotOfTopPot.addShop("Capitol Hill",CapitolHill);
+      var SouthLakeUnion = new DonutShop(9,23,6.33);
+        TopSpotOfTopPot.addShop("South Lake Union",SouthLakeUnion);
+      var Wedgewood = new DonutShop(2,28,1.25);
+        TopSpotOfTopPot.addShop("Wedgewood",Wedgewood);
+      var Ballard = new DonutShop(8,58,3.75);
+        TopSpotOfTopPot.addShop("Ballard",Ballard);
+
+        TopSpotOfTopPot.generateReport();
+
+       var $link1 = $('#Capital');
+         $link1.on('mouseover', function() {
+
+            $('#main').attr('src', 'img/TopPotCapitolHill.jpg').fadeIn(2000);
+         })
+         $link1.on('mouseout', function() {
+            $('#main').attr('src', 'http://dazzlingplaces.com/Images/Seattle/Top%20Pot/TopPotAssortment.jpg');
+         })
+
+       var $link2 = $('#Downtown');
+         $link2.on('mouseover', function() {
+
+            $('#main').attr('src', 'img/TopPotDowntown.JPG').fadeIn(2000);
+         })
+         $link2.on('mouseout', function() {
+            $('#main').attr('src', 'http://dazzlingplaces.com/Images/Seattle/Top%20Pot/TopPotAssortment.jpg');
+         })
+
+       var $link3 = $('#Wedgewood');
+         $link3.on('mouseover', function() {
+
+            $('#main').attr('src', 'img/TopPotWedgewood.jpg').fadeIn(2000);
+         })
+         $link3.on('mouseout', function() {
+            $('#main').attr('src', 'http://dazzlingplaces.com/Images/Seattle/Top%20Pot/TopPotAssortment.jpg');
+         })
+
+       var $link4 = $('#Ballard');
+         $link4.on('mouseover', function() {
+
+            $('#main').attr('src', 'img/TopPotBallard.jpg').fadeIn(2000);
+         })
+        $link4.on('mouseout', function() {
+          $('#main').attr('src', 'http://dazzlingplaces.com/Images/Seattle/Top%20Pot/TopPotAssortment.jpg');
+        })
+
+       var $link5 = $('#SLU');
+         $link5.on('mouseover', function() {
+
+            $('#main').attr('src', 'img/TopPotSLU.JPG').fadeIn(2000);
+         })
+         $link5.on('mouseout', function() {
+            $('#main').attr('src', 'http://dazzlingplaces.com/Images/Seattle/Top%20Pot/TopPotAssortment.jpg');
+         })
+
+
+       var $link6 = $('#appleFritter');
+         $link6.on('mouseover', function() {
+
+            $('#menuImage').attr('src', 'img/apple-fritter.jpg').fadeIn(2000);
+         })
+         $link6.on('mouseout', function() {
+            $('#menuImage').attr('src','img/toppot_handforgedlogo.jpg');
+         })
+
+       var $link7 = $('#bar');
+         $link7.on('mouseover', function() {
+
+            $('#menuImage').attr('src', 'img/bars.jpg').fadeIn(2000);
+         })
+         $link7.on('mouseout', function() {
+            $('#menuImage').attr('src','img/toppot_handforgedlogo.jpg');
+         })
+
+       var $link8 = $('#chocolateCake');
+         $link8.on('mouseover', function() {
+
+            $('#menuImage').attr('src', 'img/chocolate-cake.jpg').fadeIn(2000);
+         })
+         $link8.on('mouseout', function() {
+            $('#menuImage').attr('src','img/toppot_handforgedlogo.jpg');
+         })
+
+       var $link9 = $('#filled');
+         $link9.on('mouseover', function() {
+
+            $('#menuImage').attr('src', 'img/filled.jpg').fadeIn(2000);
+         })
+         $link9.on('mouseout', function() {
+            $('#menuImage').attr('src','img/toppot_handforgedlogo.jpg');
+         })
+
+       var $link10 = $('#oldFashion');
+         $link10.on('mouseover', function() {
+
+            $('#menuImage').attr('src', 'img/old-fashioned.jpg').fadeIn(2000);
+         })
+         $link10.on('mouseout', function() {
+            $('#menuImage').attr('src','img/toppot_handforgedlogo.jpg');
+         })
+
+       var $link11 = $('#plainCake');
+         $link11.on('mouseover', function() {
+
+            $('#menuImage').attr('src', 'img/plain-cake.jpg').fadeIn(2000);
+         })
+         $link11.on('mouseout', function() {
+            $('#menuImage').attr('src','img/toppot_handforgedlogo.jpg');
+         })
+
+       var $link12 = $('#rings');
+         $link12.on('mouseover', function() {
+
+            $('#menuImage').attr('src', 'img/rings.jpg').fadeIn(2000);
+         })
+         $link12.on('mouseout', function() {
+            $('#menuImage').attr('src','img/toppot_handforgedlogo.jpg');
+         })
+
+       var $link13 = $('#specialtyCake');
+         $link13.on('mouseover', function() {
+
+            $('#menuImage').attr('src', 'img/specialty-cake.jpg').fadeIn(2000);
+         })
+         $link13.on('mouseout', function() {
+            $('#menuImage').attr('src','img/toppot_handforgedlogo.jpg');
+         })
+
+       var $link14 = $('#sprinkles');
+         $link14.on('mouseover', function() {
+
+            $('#menuImage').attr('src', 'img/sprinkles.jpg').fadeIn(2000);
+         })
+         $link14.on('mouseout', function() {
+            $('#menuImage').attr('src','img/toppot_handforgedlogo.jpg');
+         })
+
+       var $showForm = $('#showForm');
+       var $newAddShop = $('#newAddShop');
+       var $newItemForm = $('#newShopForm');
+       var $newShopName = $('#shopName');
+       var $newAvgPerHour = $('#avgPerHour');
+       var $newminCustomers = $('#minCustomers');
+       var $newmaxCustomers = $('#maxCustomers');
+
+       $showForm.show();
+       $newItemForm.hide();
+
+       $('#showForm').on('click', function() {
+          $showForm.hide();
+          $newItemForm.show();
+
+       });
+
+       $newItemForm.on('submit', function(e) {
+          e.preventDefault();
+
+          var tempDonutShop = new DonutShop(Number($newminCustomers.val()),Number($newmaxCustomers.val()),Number($newAvgPerHour.val()));
+          TopSpotOfTopPot.addShop($newShopName.val(),tempDonutShop);
+
+          $showForm.show();
+          $newItemForm.hide();
+
+       });
+
+    </script>
+  </body>
+</html>
